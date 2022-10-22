@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.fgoauto.mybaits.mapper.base.FgoAutoBaseMapper">
+
+
+    <insert id="insertFgoAuto" >
+        INSERT INTO `fgo_auto`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="gmtCreate!=null">
+                        `gmt_create`,
+                    </if>
+                    <if test="gmtModified!=null">
+                        `gmt_modified`,
+                    </if>
+                    <if test="creator!=null">
+                        `creator`,
+                    </if>
+                    <if test="script!=null">
+                        `script`,
+                    </if>
+                    <if test="ext!=null">
+                        `ext`,
+                    </if>
+                    <if test="name!=null">
+                        `name`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="gmtCreate!=null">
+                    #{gmtCreate},
+                </if>
+                <if test="gmtModified!=null">
+                    #{gmtModified},
+                </if>
+                <if test="creator!=null">
+                    #{creator},
+                </if>
+                <if test="script!=null">
+                    #{script},
+                </if>
+                <if test="ext!=null">
+                    #{ext},
+                </if>
+                <if test="name!=null">
+                    #{name},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateFgoAuto">
+        UPDATE `fgo_auto`
+        SET
+        <trim suffixOverrides=",">
+            <if test="gmtCreate != null">
+                `gmt_create` = #{gmtCreate},
+            </if>
+            <if test="gmtModified != null">
+                `gmt_modified` = #{gmtModified},
+            </if>
+            <if test="creator != null and creator!=''">
+                `creator` = #{creator},
+            </if>
+            <if test="script != null and script!=''">
+                `script` = #{script},
+            </if>
+            <if test="ext != null and ext!=''">
+                `ext` = #{ext},
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `fgo_auto`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.gmtCreate != null">
+            `gmt_create` = #{set.gmtCreate},
+        </if>
+        <if test="set.gmtModified != null">
+            `gmt_modified` = #{set.gmtModified},
+        </if>
+        <if test="set.creator != null and set.creator!=''">
+            `creator` = #{set.creator},
+        </if>
+        <if test="set.script != null and set.script!=''">
+            `script` = #{set.script},
+        </if>
+        <if test="set.ext != null and set.ext!=''">
+            `ext` = #{set.ext},
+        </if>
+        <if test="set.name != null and set.name!=''">
+            `name` = #{set.name},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.gmtCreateList != null">
+                    `gmt_create` in
+                    <foreach collection="where.gmtCreateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.gmtCreateSt !=null">
+                `gmt_create` >= #{where.gmtCreateSt} and
+            </if>
+            <if test="where.gmtCreateEd!=null">
+                `gmt_create` &lt;= #{where.gmtCreateEd} and
+            </if>
+                <if test="where.gmtModifiedList != null">
+                    `gmt_modified` in
+                    <foreach collection="where.gmtModifiedList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.gmtModifiedSt !=null">
+                `gmt_modified` >= #{where.gmtModifiedSt} and
+            </if>
+            <if test="where.gmtModifiedEd!=null">
+                `gmt_modified` &lt;= #{where.gmtModifiedEd} and
+            </if>
+                <if test="where.creatorList != null">
+                    `creator` in
+                    <foreach collection="where.creatorList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyCreator!=null and where.fuzzyCreator.size()>0">
+                (
+                <foreach collection="where.fuzzyCreator"  separator="or" item="item">
+                    `Creator` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyCreator!=null and where.rightFuzzyCreator.size()>0">
+                (
+                <foreach collection="where.rightFuzzyCreator"  separator="or" item="item">
+                    `Creator` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.scriptList != null">
+                    `script` in
+                    <foreach collection="where.scriptList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyScript!=null and where.fuzzyScript.size()>0">
+                (
+                <foreach collection="where.fuzzyScript"  separator="or" item="item">
+                    `Script` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyScript!=null and where.rightFuzzyScript.size()>0">
+                (
+                <foreach collection="where.rightFuzzyScript"  separator="or" item="item">
+                    `Script` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.extList != null">
+                    `ext` in
+                    <foreach collection="where.extList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyExt!=null and where.fuzzyExt.size()>0">
+                (
+                <foreach collection="where.fuzzyExt"  separator="or" item="item">
+                    `Ext` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyExt!=null and where.rightFuzzyExt.size()>0">
+                (
+                <foreach collection="where.rightFuzzyExt"  separator="or" item="item">
+                    `Ext` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.nameList != null">
+                    `name` in
+                    <foreach collection="where.nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyName!=null and where.fuzzyName.size()>0">
+                (
+                <foreach collection="where.fuzzyName"  separator="or" item="item">
+                    `Name` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyName!=null and where.rightFuzzyName.size()>0">
+                (
+                <foreach collection="where.rightFuzzyName"  separator="or" item="item">
+                    `Name` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="com.example.fgoauto.mybaits.dao.FgoAuto" id="FgoAutoMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="creator" column="creator"/>
+        <result property="script" column="script"/>
+        <result property="ext" column="ext"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+
+    <select id="queryFgoAuto" resultMap="FgoAutoMap">
+        select
+        <include refid="baseResult"></include>
+        from  `fgo_auto`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="gmtCreate != null">
+                `gmt_create` = #{gmtCreate} and
+            </if>
+            <if test="gmtModified != null">
+                `gmt_modified` = #{gmtModified} and
+            </if>
+            <if test="creator != null and creator!=''">
+                `creator` = #{creator} and
+            </if>
+            <if test="script != null and script!=''">
+                `script` = #{script} and
+            </if>
+            <if test="ext != null and ext!=''">
+                `ext` = #{ext} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test = "(_parameter instanceof com.example.fgoauto.mybaits.dao.FgoAuto$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="gmtCreateList != null">
+                    `gmt_create` in
+                    <foreach collection="gmtCreateList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="gmtCreateSt !=null">
+                    `gmt_create` >= #{gmtCreateSt} and
+                </if>
+                <if test="gmtCreateEd!=null">
+                    `gmt_create` &lt;= #{gmtCreateEd} and
+                </if>
+                <if test="gmtModifiedList != null">
+                    `gmt_modified` in
+                    <foreach collection="gmtModifiedList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="gmtModifiedSt !=null">
+                    `gmt_modified` >= #{gmtModifiedSt} and
+                </if>
+                <if test="gmtModifiedEd!=null">
+                    `gmt_modified` &lt;= #{gmtModifiedEd} and
+                </if>
+                <if test="creatorList != null">
+                    `creator` in
+                    <foreach collection="creatorList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyCreator!=null and fuzzyCreator.size()>0">
+                    (
+                    <foreach collection="fuzzyCreator"  separator="or" item="item">
+                        `Creator` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCreator!=null and rightFuzzyCreator.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCreator"  separator="or" item="item">
+                        `Creator` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="scriptList != null">
+                    `script` in
+                    <foreach collection="scriptList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyScript!=null and fuzzyScript.size()>0">
+                    (
+                    <foreach collection="fuzzyScript"  separator="or" item="item">
+                        `Script` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyScript!=null and rightFuzzyScript.size()>0">
+                    (
+                    <foreach collection="rightFuzzyScript"  separator="or" item="item">
+                        `Script` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="extList != null">
+                    `ext` in
+                    <foreach collection="extList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyExt!=null and fuzzyExt.size()>0">
+                    (
+                    <foreach collection="fuzzyExt"  separator="or" item="item">
+                        `Ext` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExt!=null and rightFuzzyExt.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExt"  separator="or" item="item">
+                        `Ext` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="nameList != null">
+                    `name` in
+                    <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryFgoAutoLimit1" resultMap="FgoAutoMap">
+        select
+        <include refid="baseResult"></include>
+        from  `fgo_auto`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="gmtCreate != null">
+                `gmt_create` = #{gmtCreate} and
+            </if>
+            <if test="gmtModified != null">
+                `gmt_modified` = #{gmtModified} and
+            </if>
+            <if test="creator != null and creator!=''">
+                `creator` = #{creator} and
+            </if>
+            <if test="script != null and script!=''">
+                `script` = #{script} and
+            </if>
+            <if test="ext != null and ext!=''">
+                `ext` = #{ext} and
+            </if>
+            <if test="name != null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test = "(_parameter instanceof com.example.fgoauto.mybaits.dao.FgoAuto$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="gmtCreateList != null">
+                        `gmt_create` in
+                        <foreach collection="gmtCreateList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="gmtCreateSt !=null">
+                    `gmt_create` >= #{gmtCreateSt} and
+                </if>
+                <if test="gmtCreateEd!=null">
+                    `gmt_create` &lt;= #{gmtCreateEd} and
+                </if>
+                    <if test="gmtModifiedList != null">
+                        `gmt_modified` in
+                        <foreach collection="gmtModifiedList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="gmtModifiedSt !=null">
+                    `gmt_modified` >= #{gmtModifiedSt} and
+                </if>
+                <if test="gmtModifiedEd!=null">
+                    `gmt_modified` &lt;= #{gmtModifiedEd} and
+                </if>
+                    <if test="creatorList != null">
+                        `creator` in
+                        <foreach collection="creatorList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyCreator!=null and fuzzyCreator.size()>0">
+                    (
+                    <foreach collection="fuzzyCreator"  separator="or" item="item">
+                        `Creator` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyCreator!=null and rightFuzzyCreator.size()>0">
+                    (
+                    <foreach collection="rightFuzzyCreator"  separator="or" item="item">
+                        `Creator` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="scriptList != null">
+                        `script` in
+                        <foreach collection="scriptList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyScript!=null and fuzzyScript.size()>0">
+                    (
+                    <foreach collection="fuzzyScript"  separator="or" item="item">
+                        `Script` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyScript!=null and rightFuzzyScript.size()>0">
+                    (
+                    <foreach collection="rightFuzzyScript"  separator="or" item="item">
+                        `Script` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="extList != null">
+                        `ext` in
+                        <foreach collection="extList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyExt!=null and fuzzyExt.size()>0">
+                    (
+                    <foreach collection="fuzzyExt"  separator="or" item="item">
+                        `Ext` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyExt!=null and rightFuzzyExt.size()>0">
+                    (
+                    <foreach collection="rightFuzzyExt"  separator="or" item="item">
+                        `Ext` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="nameList != null">
+                        `name` in
+                        <foreach collection="nameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyName!=null and fuzzyName.size()>0">
+                    (
+                    <foreach collection="fuzzyName"  separator="or" item="item">
+                        `Name` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyName!=null and rightFuzzyName.size()>0">
+                    (
+                    <foreach collection="rightFuzzyName"  separator="or" item="item">
+                        `Name` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `gmt_create`,
+        `gmt_modified`,
+        `creator`,
+        `script`,
+        `ext`,
+        `name`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.example.fgoauto.mybaits.dao.FgoAuto$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.gmtCreate==true">
+                        `gmt_create`,
+                    </if>
+                    <if test="fetchFields.fetchFields.gmtModified==true">
+                        `gmt_modified`,
+                    </if>
+                    <if test="fetchFields.fetchFields.creator==true">
+                        `creator`,
+                    </if>
+                    <if test="fetchFields.fetchFields.script==true">
+                        `script`,
+                    </if>
+                    <if test="fetchFields.fetchFields.ext==true">
+                        `ext`,
+                    </if>
+                    <if test="fetchFields.fetchFields.name==true">
+                        `name`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.gmtCreate==null">
+                        `gmt_create`,
+                    </if>
+                    <if test="fetchFields.excludeFields.gmtModified==null">
+                        `gmt_modified`,
+                    </if>
+                    <if test="fetchFields.excludeFields.creator==null">
+                        `creator`,
+                    </if>
+                    <if test="fetchFields.excludeFields.script==null">
+                        `script`,
+                    </if>
+                    <if test="fetchFields.excludeFields.ext==null">
+                        `ext`,
+                    </if>
+                    <if test="fetchFields.excludeFields.name==null">
+                        `name`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.example.fgoauto.mybaits.dao.FgoAuto$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
