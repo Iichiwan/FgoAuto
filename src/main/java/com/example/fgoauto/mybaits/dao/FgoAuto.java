@@ -10,7 +10,7 @@ import java.util.List;
 */
 public class FgoAuto implements Serializable {
 
-    private static final long serialVersionUID = 1666407101873L;
+    private static final long serialVersionUID = 1666521345743L;
 
 
     /**

@@ -4,7 +4,7 @@
 <mapper namespace="com.example.fgoauto.mybaits.mapper.base.FgoAutoBaseMapper">
 
 
-    <insert id="insertFgoAuto" >
+    <insert id="insertFgoAuto"  useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `fgo_auto`
         (
         <trim suffixOverrides=",">

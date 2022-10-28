@@ -8,6 +8,7 @@ import com.example.fgoauto.test.MysqlTest;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,7 +49,16 @@ public class HelloController {
 
     @GetMapping(value = "/api/addFgoAuto")
     public Integer addFgoAuto(FgoAuto fgoAuto) {
+        if(fgoAuto.getScript()==null){
+            fgoAuto.setScript("{\"start\":[\"eatApple\",\"choose\"],\"turn1\":[],\"turn2\":[],\"turn3\":[],\"end\":[]}");
+        }
         int id= fgoAutoMapper.insertFgoAuto(fgoAuto);
+        return id;
+    }
+
+    @PostMapping(value = "/api/editFgoAutoScript")
+    public Integer editFgoAutoScript(FgoAuto fgoAuto) {
+        int id= fgoAutoMapper.updateFgoAuto(fgoAuto);
         return id;
     }
 

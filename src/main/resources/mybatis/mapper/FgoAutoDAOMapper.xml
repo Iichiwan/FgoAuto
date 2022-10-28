@@ -6,13 +6,14 @@
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.example.fgoauto.mybaits.dao.FgoAutoDAOWithBLOBs" extends="BaseResultMap" >
     <result column="script" property="script" jdbcType="LONGVARCHAR" />
     <result column="ext" property="ext" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, gmt_create, gmt_modified, creator
+    id, gmt_create, gmt_modified, creator, name
   </sql>
   <sql id="Blob_Column_List" >
     script, ext
@@ -31,11 +32,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.fgoauto.mybaits.dao.FgoAutoDAOWithBLOBs" >
     insert into fgo_auto (id, gmt_create, gmt_modified, 
-      creator, script, ext
-      )
+      creator, name, script, 
+      ext)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=VARCHAR}, #{script,jdbcType=LONGVARCHAR}, #{ext,jdbcType=LONGVARCHAR}
-      )
+      #{creator,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{script,jdbcType=LONGVARCHAR}, 
+      #{ext,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.fgoauto.mybaits.dao.FgoAutoDAOWithBLOBs" >
     insert into fgo_auto
@@ -51,6 +52,9 @@
       </if>
       <if test="creator != null" >
         creator,
+      </if>
+      <if test="name != null" >
+        name,
       </if>
       <if test="script != null" >
         script,
@@ -72,6 +76,9 @@
       <if test="creator != null" >
         #{creator,jdbcType=VARCHAR},
       </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="script != null" >
         #{script,jdbcType=LONGVARCHAR},
       </if>
@@ -92,6 +99,9 @@
       <if test="creator != null" >
         creator = #{creator,jdbcType=VARCHAR},
       </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="script != null" >
         script = #{script,jdbcType=LONGVARCHAR},
       </if>
@@ -106,6 +116,7 @@
     set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       creator = #{creator,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       script = #{script,jdbcType=LONGVARCHAR},
       ext = #{ext,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
@@ -114,7 +125,8 @@
     update fgo_auto
     set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      creator = #{creator,jdbcType=VARCHAR}
+      creator = #{creator,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
