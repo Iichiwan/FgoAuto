@@ -81,15 +81,9 @@
                             <configurationFile>src/main/resources/mybatis/mybatis-generator.xml</configurationFile>
                             <verbose>true</verbose>
                             <overwrite>true</overwrite>
+                            <skip>true</skip>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>Generate MyBatis Artifacts</id>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+                        
                         <dependencies>
                             <dependency>
                                 <groupId>org.mybatis.generator</groupId>

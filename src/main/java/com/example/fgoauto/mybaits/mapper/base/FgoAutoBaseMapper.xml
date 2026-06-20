@@ -630,7 +630,7 @@
     </sql>
 
 
-</mapper>
+
     <!-- 分页查询，按 gmt_modified 倒序 -->
     <select id="queryFgoAutoPage" resultMap="FgoAutoMap">
         select `id`, `gmt_create`, `gmt_modified`, `creator`, `script`, `ext`, `name`
@@ -645,3 +645,4 @@
         select count(*) from `fgo_auto` where `script` is not null
     </select>
 
+</mapper>
