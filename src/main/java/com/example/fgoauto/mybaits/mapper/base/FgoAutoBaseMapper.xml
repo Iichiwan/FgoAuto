@@ -631,3 +631,17 @@
 
 
 </mapper>
+    <!-- 分页查询，按 gmt_modified 倒序 -->
+    <select id="queryFgoAutoPage" resultMap="FgoAutoMap">
+        select `id`, `gmt_create`, `gmt_modified`, `creator`, `script`, `ext`, `name`
+        from `fgo_auto`
+        where `script` is not null
+        order by `gmt_modified` desc
+        limit #{pageSize} offset #{offset}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countFgoAuto" resultType="int">
+        select count(*) from `fgo_auto` where `script` is not null
+    </select>
+

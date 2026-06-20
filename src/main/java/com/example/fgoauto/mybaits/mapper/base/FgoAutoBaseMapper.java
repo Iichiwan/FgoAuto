@@ -18,4 +18,8 @@ public interface FgoAutoBaseMapper {
 
     FgoAuto queryFgoAutoLimit1(FgoAuto object);
 
+    List<FgoAuto> queryFgoAutoPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    int countFgoAuto();
+
 }
